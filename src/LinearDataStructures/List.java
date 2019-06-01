@@ -1,8 +1,6 @@
 package LinearDataStructures;
 import java.io.*;
 
-import javax.xml.soap.Node;
-
 /*
 # Lists based on Pointers.
 #
@@ -13,7 +11,7 @@ import javax.xml.soap.Node;
 #
 # DataStructuresTemplates is free software: you can redistribute it and/or modify it under the terms of the
 # GNU General Public License as published by the Free Software Foundation, version 3.
-*/
+ */
 
 /**
  * This class represents the behavior of Lists based on Pointers
@@ -22,28 +20,28 @@ import javax.xml.soap.Node;
 public class List {
 
 	public Node head = null;
-	
-	
+
+
 	public List() {}
-	
+
 	/**
-	 * 
-	 * @return
+	 * This method validates if the list is empty
+	 * @return if the list is empty return true, else return false
 	 */
 	public boolean isEmpty()
 	{
 		return head == null ? true : false;
 	}
-	
-	
+
+
 	/**
-	 * 
+	 * This method print list
 	 */
 	public void printList()
 	{
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter( System.out ));
 		Node temp = head;
-		
+
 		try
 		{
 			while(temp != null)
@@ -55,58 +53,57 @@ public class List {
 		}
 		catch(Exception ex) { ex.printStackTrace(); }
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @param newNode
+	 * This method insert a new Node at begin of the list
+	 * @param new Node 
 	 */
-	public void insertAtBegin (Node newNode)
+	public void insertAtBegin(Node newNode)
 	{
 		newNode.setNext(head);
 		head = newNode;
-	
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @param newNode
+	 * This method insert a new Node at end of the list
+	 * @param new Node
 	 */
 	public void insertAtEnd(Node newNode)
 	{
-		Node temp = head;
-		Node newNode;
-		while(temp != null) {
-			temp=temp.getNext();
+		if (isEmpty()) {
+			head=newNode;
 		}
-		newNode=temp.getNext();
-		
+		Node temp=head;
+		while(temp.getNext()!=null) {
+			temp=temp.getNext();
+
+		}
+		temp.setNext(newNode);
+		newNode.setNext(null);
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @param newNode
+	 * This method insert a new Node at a specific index of the list
+	 * @param new Node
 	 * @param index
 	 */
 	public void insertAtIndex(Node newNode, int index)
 	{
-		Node temp = head;
-		Node newNode;
-		
-		for(int i = 0; i < index ; i++)
-			temp = temp.getNext();
-		
-		newNode = temp.getNext(); 
-		for (int i = 0; i < index-1; i++) 
-		     temp.setNext(newNode);
-		 
+		Node temp=head;
+		for (int i = 0; i < index-1; i++) {
+			temp=temp.getNext();
+		}
+		newNode.setNext(temp.getNext());
+		temp.setNext(newNode);
+
 	}
-	
-	
+
+
 	/**
-	 * 
+	 * This method delete the present Node at begin of the list
 	 */
 	public void deleteAtBegin()
 	{
@@ -115,54 +112,52 @@ public class List {
 		temp = null;
 		System.gc();
 	}
-	
-	
+
+
 	/**
-	 * this method is used to eliminate a node at the end of the list
+	 * This method delete the present Node at end of the list
 	 */
 	public void deleteAtEnd()
 	{
-		Node temp = head;
-		Node previous=temp;
-		while(temp.getNext() != null) {
-            previous = temp;
+		Node temp=head;
+		while(temp.getNext().getNext()!=null) {
 			temp=temp.getNext();
 		}
-		temp=null;
-		previous.setNext(null);
+		temp.setNext(null);
 		System.gc();
 	}
-	
-	
+
+
 	/**
-	 * 
+	 * This method delete the present Node at a specific index of the list
 	 * @param index
 	 */
 	public void deleteAtIndex(int index)
 	{
 		Node temp = head;
 		Node toDelete;
-		
+
 		for(int i = 0; i < index - 1; i++)
 			temp = temp.getNext();
-		
+
 		toDelete = temp.getNext(); 
 		temp.setNext(toDelete.getNext());
 		toDelete = null;
 		System.gc();
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @param oldNode
-	 * @param newNode
+	 * This method updates the existing node at first position
+	 * by the node that you enter as a parameter
+	 * @param existing node
+	 * @param new Node
 	 */
 	public void updateFirst(Node oldNode, Node newNode)
 	{
 		Node temp = head;
 		Node previous = head;
-		
+
 		while(temp != null)
 		{
 			if(temp.isEqual(oldNode))
@@ -172,15 +167,16 @@ public class List {
 				temp = null;
 				break;
 			}
-			
+
 			previous = temp;
 			temp = temp.getNext();
 		}
 	}
-	
-	
+
+
 	/**
-	 * 
+	 * This method updates all existing nodes at list that are
+	 * equal to the node OldNode by the Node newNode.
 	 * @param oldNode
 	 * @param newNode
 	 */
@@ -188,7 +184,7 @@ public class List {
 	{
 		Node temp = head;
 		Node previous = head;
-		
+
 		while(temp != null)
 		{
 			if(temp.isEqual(oldNode))
@@ -206,10 +202,12 @@ public class List {
 			}
 		}
 	}
-	
-	
+
+
 	/**
-	 * 
+	 * This method performs a linear search in the list, 
+	 * element by element from the head, 
+	 * until finding the first match of the searched node
 	 * @param node
 	 * @return
 	 */
@@ -217,7 +215,7 @@ public class List {
 	{
 		Node temp = head;
 		Node result = null;
-		
+
 		while(temp != null)
 			if(temp.isEqual(node))
 			{	
@@ -226,86 +224,85 @@ public class List {
 			}
 			else
 				temp = temp.getNext();
-			
+
 		return result;
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @param node
-	 * @return
+	 * This method performs a linear search in the list, 
+	 * element by element from the head, 
+	 * until finding all matches of the searched node
+	 * @param searched node
+	 * @return List of all matches of the searched node
 	 */
 	public List searchAll(Node node)
 	{
 		Node temp = head;
 		List results = new List();
-		
+
 		while(temp != null)
 		{
 			if(temp.isEqual(node))
 			{	
 				results.insertAtEnd(temp.clone());
 			}
-			
+
 			temp = temp.getNext();
 		}
-		
+
 		return results;
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @param node
-	 * @return
+	 * This method performs a binary search in the list
+	 * @param searched node
+	 * @return index of the searched node
 	 */
 	public int binarySearch(Node node)
 	{
-		int lowerBound=0, upperBound=this.get.length()-1;
-		int middle=0, index=-1;
-		
-		while(upperBound>lowerBound)
-		{
-			middle=(lowerBound + upperBound)/2;
-			if(get(middle).isEqual(node))
-			{
+		int lower_bo = 0, uper_bo = this.length()-1;
+		int middle = 0, index = -1;
+
+		while(uper_bo>lower_bo) {
+			middle = (lower_bo + uper_bo)/2;
+
+			if(get(middle).isEqual(node)) {
 				index = middle;
 				break;
 			}
-			else 
-				if(get(middle).isLessThan(node))
-					lowerBound=middle+1;
-				else
-					upperBound=middle-1;
- 		}
-		
+			else if(get(middle).isLessThan(node)) {
+				lower_bo = middle +1;
+			}else {
+				uper_bo = middle-1;
+			}
+		}
 		return index;
 	}
-	
-	
+
 	/**
-	 * 
+	 * this method updates the list, reversing the elements of it.
 	 */
 	public void reverse()
 	{
 		Stack tempStack = new Stack();
 		Node temp = head;
-		
+
 		while(temp != null)
 		{
 			tempStack.push(temp.clone());
 			temp = temp.getNext();
 		}
-		
+
 		head = tempStack.top;
 	}
-	
-	
+
+
 	/**
-	 * 
-	 * @param unsorted
-	 * @return
+	 * This method sorts the list nodes from least to highest 
+	 * @param List unsorted
+	 * @return List sorted
 	 */
 	public List quickSort(List unsorted)
 	{
@@ -317,52 +314,52 @@ public class List {
 		{
 			Node pivot = unsorted.head;
 			Node temp = pivot.getNext();
-			
+
 			List less_elements = new List();
 			List greater_elements = new List();
-			
+
 			while(temp != null)
 			{
 				if(temp.isLessThan(pivot))
 					less_elements.insertAtEnd(temp.clone());
 				else
 					greater_elements.insertAtEnd(temp.clone());
-				
+
 				temp = temp.getNext();
 			}
-			
+
 			pivot.setNext(null);
 			less_elements = quickSort(less_elements);
 			less_elements.insertAtEnd(pivot);
 			less_elements.insertAtEnd( quickSort(greater_elements).head );
-			
+
 			return less_elements;
 		}
 	}
-	
-	
+
+
 	public List sublist(int begin)
 	{
 		List subList = new List();
-		
+
 		if(begin < this.length())
 		{
 			Node temp = head;
-			
+
 			for(int i = 0; i < begin; i++)
 				temp = temp.getNext();
-			
+
 			while(temp != null)
 			{
 				subList.insertAtEnd(temp.clone());
 				temp = temp.getNext();
 			}
 		}
-		
+
 		return subList;
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * @param begin
@@ -371,58 +368,59 @@ public class List {
 	 */
 	public List sublist(int begin, int end)
 	{
-       List subList = new List();
-		
-		if(begin < this.length() && end< this.length() && begin < end)
+		List subList = new List();
+
+		if(begin < this.length() && end<this.length() && begin < end)
 		{
 			Node temp = head;
-			
-			for(int i = 0; i < (end - begin); i++)
+			for(int i = 0; i < begin; i++)
 				temp = temp.getNext();
-			
-			while(temp != null)
+			for (int i = 0; i < (end-begin); i++)
 			{
 				subList.insertAtEnd(temp.clone());
 				temp = temp.getNext();
 			}
 		}
-		
+
 		return subList;
-	
+	}
+
 	/**
 	 * 
 	 * @return
 	 */
 	public int length()
 	{
-	    int counter=0;
-	    Node temp=head;
-	    while (temp!=null) {
-	    	counter += 1;
-	    	temp=temp.getNext();
-	    }
+		int cuenta=0;
+		Node temp=head;
+		while(temp!=null) {
+			temp=temp.getNext();
+			cuenta++;
 
-		return counter;
+		}
+		return cuenta;
+
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * @return
 	 */
 	public List cloneList()
 	{
-		list newList =new List();
-		Node temp =head;
-		while(temp!=null)
-		{
-			newList.insertAtEnd(temp.cloneNode());
+		Node temp=head;
+		List clone=new List();
+		while(temp!=null) {
+			clone.insertAtEnd(temp.clone());
 			temp=temp.getNext();
 		}
-		return newList;
+
+
+		return clone;
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * @param list
@@ -433,7 +431,7 @@ public class List {
 		boolean isEqual = true;
 		Node tempCurrent = head;
 		Node tempList = list.head;
-		
+
 		while(tempCurrent != null && tempList != null)
 			if(tempCurrent.isEqual(tempList))
 			{
@@ -445,11 +443,11 @@ public class List {
 				isEqual = false;
 				break;
 			}
-			
+
 		return isEqual;
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * @param index
@@ -457,21 +455,17 @@ public class List {
 	 */
 	public Node get(int index)
 	{
-	    Node result=null;
-	    
-		if (index<this.length())
-		{
-			Node temp=head;
-			
-			for (int i = 0; i < index; i++)
-				temp=temp.getNext();
-				
-			result = temp.cloneNode();
+		Node temp=head;
+		for (int i = 0; i < index-1; i++) {
+			temp=temp.getNext();
 		}
-		return null;
+		return temp.clone()  
+
+
+				;
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * @param node
@@ -481,16 +475,16 @@ public class List {
 	{
 		int index = -1;
 		Node temp = head;
-		
+
 		while(temp != null)
 		{
 			index += 1;
 			if(temp.isEqual(node))
 				return index;
-			
+
 			temp = temp.getNext();
 		}
-		 
+
 		index = -1;
 		return index;
 	}

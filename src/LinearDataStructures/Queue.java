@@ -1,5 +1,8 @@
 package LinearDataStructures;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+
 /*
 # Queues based on Lists.
 #
@@ -10,18 +13,18 @@ package LinearDataStructures;
 #
 # DataStructuresTemplates is free software: you can redistribute it and/or modify it under the terms of the
 # GNU General Public License as published by the Free Software Foundation, version 3.
-*/
+ */
 
 /**
  * This class represents the behavior of Queues
  * @author MSc. Carlos Andres Sierra, PhD. student
  */
 public class Queue {
-	
+
 	Node head = null; //
-	
+
 	public Queue() {}
-	
+
 	/**
 	 * 
 	 * @return
@@ -30,33 +33,58 @@ public class Queue {
 	{
 		return head == null ? true : false;
 	}
-	
-	
+
+
 	/**
-	 * 
+	 * Add Node at last Queue
 	 * @param newNode
 	 */
 	public void enqueue(Node newNode)
 	{
-		Node temp = head;
-		if(!this.isEmpty())
-		    while(temp != null) 
-			     temp=temp.getNext();
+		if (isEmpty()) {
+			head=newNode;
+		}
+		Node temp=head;
+		while(temp.getNext()!=null) {   		
+			temp=temp.getNext();
+
+		}
+		temp.setNext(newNode);
+		newNode.setNext(null);
 	}
-		newNode=temp.getNext();
-	}
-	
-	
 	/**
-	 * 
+	 * Take Node at start Queue
 	 * @return
 	 */
 	public Node dequeue()
 	{
-		Node temp = head;
-		head = temp.getNext();
-		temp.setNext(null);
-		
-		return temp
+		Node temp=head;
+		head=temp.getNext();
+		temp=null;
+
+		return  temp;
 	}
+	
+	
+	/*
+	 * Print Queue
+	 */
+	public void printQueue()
+	{
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter( System.out ));
+		Node temp = head;
+
+		try
+		{
+			while(temp != null)
+			{
+				bw.write(temp.toString());
+				temp = temp.getNext();
+			}
+			bw.flush();
+		}
+		catch(Exception ex) { ex.printStackTrace(); }
+	}
+
+
 }
